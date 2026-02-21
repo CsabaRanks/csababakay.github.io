@@ -1,33 +1,109 @@
-<h1>Injection Molding Cost Model</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Injection Molding Cost Model – Csaba Bakay</title>
+<style>
+body { background-color:#0d1117; color:#c9d1d9; font-family:Arial, sans-serif; margin:0; }
+a { color:#58a6ff; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container { margin: 8% 10%; max-width: 900px; line-height: 1.55; }
+h1 { font-size: 2.6em; margin-bottom: 0.2em; }
+h2 { margin-top: 2.0em; font-size: 1.35em; }
+.meta { color:#9da7b1; margin-bottom: 1.6em; }
+.tag { display:inline-block; border:1px solid #30363d; border-radius:999px; padding:4px 10px; margin-right:8px; font-size:0.9em; color:#9da7b1; }
+code { background:#161b22; border:1px solid #30363d; padding:2px 6px; border-radius:6px; }
+ul { padding-left: 1.2em; }
+</style>
+</head>
 
-<h2>1. Problem Definition</h2>
-<p>
-Accurate cost estimation for injection molded parts under incomplete cycle time information.
-</p>
+<body>
+<div style="display:flex; justify-content:space-between; align-items:center; padding:20px 40px;">
+  <div>
+    <a href="../index.html" style="color:#c9d1d9; font-weight:bold;">Csaba Bakay</a>
+  </div>
+  <div>
+    <a href="../projects/" style="margin-right:20px;">Projects</a>
+    <a href="../research/" style="margin-right:20px;">Research</a>
+    <a href="../about/">About</a>
+  </div>
+</div>
 
-<h2>2. Modeling Approach</h2>
-<p>
-Parametric cost model based on material cost, machine rate estimation,
-geometry-dependent processing time approximation, and overhead allocation.
-</p>
+<div class="container">
+  <h1>Injection Molding Cost Model</h1>
+  <div class="meta">
+    <span class="tag">Cost Engineering</span>
+    <span class="tag">Parametric Modeling</span>
+    <span class="tag">Manufacturing</span>
+  </div>
 
-<h2>3. Feature Vector Representation</h2>
-<p>
-Each part is represented as a feature vector including:
-mass, material type, machine class, cavity count, estimated cycle proxy variables.
-</p>
+  <h2>1. Problem</h2>
+  <p>
+    Fast and reliable cost estimation for injection molded parts is often required early in sourcing and value engineering.
+    In practice, most part information is available, while <em>cycle time</em> is frequently uncertain or missing.
+  </p>
 
-<h2>4. Mathematical Structure</h2>
-<p>
-Cost = Material + Machine + Labor + Overhead
-</p>
+  <h2>2. Approach</h2>
+  <p>
+    A parametric cost model decomposes total part cost into a small number of interpretable components and uses
+    proxy variables to estimate the missing cycle-time-dependent share.
+  </p>
 
-<h2>5. Validation</h2>
-<p>
-Validated against historical procurement data. Achieved >95% accuracy.
-</p>
+  <h2>3. Cost Decomposition</h2>
+  <p>
+    The model uses the following structure:
+  </p>
+  <p>
+    <code>Cost = Material + Machine + Labor + Overhead</code>
+  </p>
+  <ul>
+    <li><strong>Material</strong>: mass × material price (+ scrap factor if needed).</li>
+    <li><strong>Machine</strong>: estimated cycle time × machine rate (machine class selected from part requirements).</li>
+    <li><strong>Labor</strong>: handling and setup proxies (e.g., lot size assumptions).</li>
+    <li><strong>Overhead</strong>: defined allocation logic (kept configurable).</li>
+  </ul>
 
-<h2>6. Implementation</h2>
-<p>
-Implemented in Excel-based parametric engine with modular structure.
-</p>
+  <h2>4. Feature Vector</h2>
+  <p>
+    Each part is represented as a feature vector enabling consistent benchmarking and model calibration.
+    Example features (non-exhaustive):
+  </p>
+  <ul>
+    <li>part mass / material</li>
+    <li>projected area / thickness class</li>
+    <li>machine class proxy (clamp force / shot weight class)</li>
+    <li>cavitation assumption (single / multi-cavity)</li>
+    <li>cycle-time proxy variables (geometry complexity, cooling dominance indicator)</li>
+  </ul>
+
+  <h2>5. Cycle Time Handling (Proxy Concept)</h2>
+  <p>
+    Instead of requiring an exact cycle time, the model estimates a <em>cycle-time proxy</em> derived from part and process indicators.
+    The proxy is designed to be:
+  </p>
+  <ul>
+    <li><strong>monotonic</strong> in relevant drivers (e.g., thicker sections → longer cooling),</li>
+    <li><strong>stable</strong> across similar parts,</li>
+    <li><strong>calibratable</strong> using historical quotations / awards.</li>
+  </ul>
+
+  <h2>6. Validation</h2>
+  <p>
+    The model is validated against a held-out set of historical part cost data and evaluated with an accuracy target of
+    <strong>&gt;95%</strong> (definition depending on the chosen metric, e.g., relative error band).
+  </p>
+
+  <h2>7. Implementation Notes</h2>
+  <ul>
+    <li>Designed for fast usage in procurement and value engineering workflows.</li>
+    <li>Configurable parameter tables (rates, overhead, material) to adapt to different plants/regions.</li>
+    <li>Tooling costs excluded in the current scope.</li>
+  </ul>
+
+  <p style="margin-top:2.2em;">
+    <a href="../projects/">← Back to Projects</a>
+  </p>
+</div>
+
+</body>
+</html>
